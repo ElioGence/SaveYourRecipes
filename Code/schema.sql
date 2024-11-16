@@ -9,16 +9,17 @@ CREATE TABLE recipes (
 
 -- Create Ingredients Table
 CREATE TABLE ingredients (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL UNIQUE
+    name VARCHAR(255) PRIMARY KEY
 );
+
+
 
 -- Create RecipeIngredients Table (Join Table)
 CREATE TABLE recipe_ingredients (
     recipe_id INT REFERENCES recipes(id) ON DELETE CASCADE,
-    ingredient_id INT REFERENCES ingredients(id) ON DELETE CASCADE,
+    ingredient_name VARCHAR(255) REFERENCES ingredients(name) ON DELETE CASCADE,
     quantity VARCHAR(255),
-    PRIMARY KEY (recipe_id, ingredient_id)
+    PRIMARY KEY (recipe_id, ingredient_name)
 );
 
 
