@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "5000:5000"  # Adjust to match the backend's port
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/recipemanager
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: executiveChef
+      POSTGRES_PASSWORD: fdhsqifhmezian123+*/
+      POSTGRES_DB: recipemanager
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+volumes:
+  pg_data:
