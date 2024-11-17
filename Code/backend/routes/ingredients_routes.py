@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from backend.utils.auth_utils import generate_jwt 
+from utils.auth_utils import generate_jwt 
 
-recipe_routes = Blueprint('ingredients_routes', __name__)
+ingredients_routes = Blueprint('ingredients_routes', __name__)
 
 # Insert an ingredient 
-@app.route('/ingredients/<string:ingredient_name>', methods=['POST']) 
+@ingredients_routes.route('/ingredients/<string:ingredient_name>', methods=['POST']) 
 def add_ingredient(ingredient_name):
     data = request.get_json()
 
@@ -27,7 +27,7 @@ def add_ingredient(ingredient_name):
 
 
 # Update an ingredient 
-@app.route('/ingredients/<string:ingredient_name>', methods=['PUT'])
+@ingredients_routes.route('/ingredients/<string:ingredient_name>', methods=['PUT'])
 def update_ingredient(ingredient_name):
     data = request.get_json()
     name = data.get('name')
@@ -49,7 +49,7 @@ def update_ingredient(ingredient_name):
         conn.close()
 
 # Delete an ingredient 
-@app.route('/ingredients/<string:ingredient_name>', methods=['DELETE'])
+@ingredients_routes.route('/ingredients/<string:ingredient_name>', methods=['DELETE'])
 def delete_ingredient(ingredient_name):
     conn = get_db_connection()
     cursor = conn.cursor()

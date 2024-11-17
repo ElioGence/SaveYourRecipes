@@ -1,5 +1,3 @@
-# backend/utils/auth_utils.py
-
 import jwt
 from datetime import datetime, timedelta
 from flask import current_app

@@ -1,6 +1,4 @@
-# run.py
-
-from app import create_app  # Assuming you have a create_app function in app.py
+from app import create_app 
 from dotenv import load_dotenv
 import os
 
@@ -12,6 +10,10 @@ flask_env = os.getenv("FLASK_ENV", "development")
 
 # Create the app instance using the environment setting
 app = create_app(flask_env)
+
+@app.route('/')
+def home():
+    return "Hello, Recipe Manager!"
 
 if __name__ == "__main__":
     # Run the Flask app

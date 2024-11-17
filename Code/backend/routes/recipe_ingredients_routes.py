@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from backend.utils.auth_utils import generate_jwt 
+from utils.auth_utils import generate_jwt 
 
-recipe_routes = Blueprint('recipe_singredients_routes', __name__)
+recipe_ingredients_routes = Blueprint('recipe_ingredients_routes', __name__)
 
 # Delete an ingredient from a recipe
-@app.route('/recipes/<int:recipe_id>/recipe_ingredients/<string:ingredient_name>', methods=['DELETE'])
+@recipe_ingredients_routes.route('/recipes/<int:recipe_id>/recipe_ingredients/<string:ingredient_name>', methods=['DELETE'])
 def delete_recipe_ingredient(recipe_id, ingredient_name):
     conn = get_db_connection()
     cursor = conn.cursor()
