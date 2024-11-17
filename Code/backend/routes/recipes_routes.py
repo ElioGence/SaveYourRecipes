@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from utils.auth_utils import generate_jwt 
+from utils.db_utils import get_db_connection
 
 recipes_routes = Blueprint('recipes_routes', __name__)
 

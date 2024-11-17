@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from utils.auth_utils import generate_jwt 
+from utils.db_utils import get_db_connection
 
 ingredients_routes = Blueprint('ingredients_routes', __name__)
 
@@ -14,7 +15,7 @@ def add_ingredient(ingredient_name):
         # Insert into ingredients (upsert logic)
         cursor.execute(
             "INSERT INTO ingredients (name) VALUES (%s) ON CONFLICT (name) DO NOTHING",
-            (ingredient_name,)
+            (ingredient_name)
         )
         conn.commit()
         return jsonify({"message": "Ingredient added"}), 201
@@ -27,17 +28,17 @@ def add_ingredient(ingredient_name):
 
 
 # Update an ingredient 
-@ingredients_routes.route('/ingredients/<string:ingredient_name>', methods=['PUT'])
+@ingredients_routes.route('/ingredients/<string:ingredient_id>', methods=['PUT'])
 def update_ingredient(ingredient_name):
     data = request.get_json()
-    name = data.get('name')
+    id = data.get('id')
 
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
         cursor.execute(
-            "UPDATE ingredients SET name = %s WHERE name = %s",
-            (name, ingredient_name)
+            "UPDATE ingredients SET name = %s WHERE id = %s",
+            (ingredient_name, id)
         )
         conn.commit()
         return jsonify({"message": "Ingredient updated"}), 200

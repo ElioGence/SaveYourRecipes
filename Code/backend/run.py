@@ -11,10 +11,6 @@ flask_env = os.getenv("FLASK_ENV", "development")
 # Create the app instance using the environment setting
 app = create_app(flask_env)
 
-@app.route('/')
-def home():
-    return "Hello, Recipe Manager!"
-
 if __name__ == "__main__":
     # Run the Flask app
     app.run(host="0.0.0.0", port=5000)

@@ -1,10 +1,12 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 import os
 from routes.recipes_routes import recipes_routes  
 from routes.users_routes import users_routes 
 from routes.ingredients_routes import ingredients_routes  
 from routes.recipe_ingredients_routes import recipe_ingredients_routes  
+from auth import auth_bp
 
 # Initialize the JWTManager instance
 jwt = JWTManager()
@@ -12,6 +14,7 @@ jwt = JWTManager()
 def create_app(config_name):
     # Create the Flask app
     app = Flask(__name__)
+    CORS(app)
 
     # Load configuration from environment or .env file
     if config_name == 'development':
@@ -28,6 +31,7 @@ def create_app(config_name):
     app.register_blueprint(users_routes)
     app.register_blueprint(ingredients_routes)
     app.register_blueprint(recipe_ingredients_routes)
+    app.register_blueprint(auth_bp)
 
     return app
 
