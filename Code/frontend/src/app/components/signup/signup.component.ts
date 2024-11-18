@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';  // Path to your auth service
+import { AuthService } from '../../shared/services/auth.service';  // Path to your auth service
 import { Router } from '@angular/router';  // Used to redirect after successful signup
+import { ReactiveFormsModule } from '@angular/forms';  
 
 @Component({
   selector: 'app-signup',

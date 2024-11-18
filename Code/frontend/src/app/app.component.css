@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .main img {
+    width: 100px;  /* Set the desired width */
+    height: auto;  /* Maintain aspect ratio */
+  }
+  
+  
+  .title h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4b4b4b; /* Adjust color as needed */
+  }
+  

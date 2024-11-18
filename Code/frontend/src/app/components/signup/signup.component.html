@@ -1,3 +1,4 @@
+<!--
 <div class="signup-container">
     <h2>Signup</h2>
     
@@ -8,9 +9,9 @@
           id="username"
           formControlName="username"
           type="text"
-          [class.invalid]="f.username?.invalid && f.username?.touched"
+          [class.invalid]="f['username'].invalid && f['username'].touched"
         />
-        <div *ngIf="f.username?.invalid && f.username?.touched" class="error">
+        <div *ngIf="f['username']?.invalid && f['username']?.touched" class="error">
           Username is required and must be at least 3 characters long.
         </div>
       </div>
@@ -21,9 +22,9 @@
           id="password"
           formControlName="password"
           type="password"
-          [class.invalid]="f.password?.invalid && f.password?.touched"
+          [class.invalid]="f['password'].invalid && f['password'].touched"
         />
-        <div *ngIf="f.password?.invalid && f.password?.touched" class="error">
+        <div *ngIf="f['password'].invalid && f['password'].touched" class="error">
           Password is required and must be at least 6 characters long.
         </div>
       </div>
@@ -34,9 +35,9 @@
           id="confirmPassword"
           formControlName="confirmPassword"
           type="password"
-          [class.invalid]="f.confirmPassword?.invalid && f.confirmPassword?.touched"
+          [class.invalid]="f['confirmPassword'].invalid && f['confirmPassword'].touched"
         />
-        <div *ngIf="f.confirmPassword?.invalid && f.confirmPassword?.touched" class="error">
+        <div *ngIf="f['confirmPassword'].invalid && f['confirmPassword'].touched" class="error">
           Please confirm your password.
         </div>
       </div>
@@ -47,5 +48,5 @@
   
       <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
     </form>
-  </div>
-  
+</div>
+-->
