@@ -1,60 +1,103 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';  // Path to your auth service
-import { Router } from '@angular/router';  // Used to redirect after successful signup
-import { ReactiveFormsModule } from '@angular/forms';  
+import { Component, input, OnInit,ViewEncapsulation } from '@angular/core';
+import { UserService } from '../../shared/services/user.service'; 
+import Keyboard from "simple-keyboard";
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-sign-up',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
+  styleUrls: ['./signup.component.css']
 })
+export class SignUpComponent implements OnInit {
+  userData;
+  keyboard;
+  value = "";
+  constructor(private user: UserService) { }
 
-export class SignupComponent {
-  signupForm: FormGroup;
-  errorMessage: string = '';
+  ngOnInit() {
+    this.user.currentUserData.subscribe(userData => this.userData = userData)
+  }
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    // Initialize the signup form with validators
-    this.signupForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]],
+  signUp(data: any){
+    this.user.changeData(data);
+  }
+
+  ngAfterViewInit() {
+    this.keyboard = new Keyboard({
+      onChange: input => this.onChange(input),
+      onKeyPress: button => this.onKeyPress(button),
+      mergeDisplay: true,
+      layoutName: "default",
+      layout: {
+        default: [
+          "q w e r t y u i o p",
+          "a s d f g h j k l",
+          "{shift} z x c v b n m {backspace}",
+          "{numbers} {space} {ent}"
+        ],
+        shift: [
+          "Q W E R T Y U I O P",
+          "A S D F G H J K L",
+          "{shift} Z X C V B N M {backspace}",
+          "{numbers} {space} {ent}"
+        ],
+        numbers: ["1 2 3", "4 5 6", "7 8 9", "{abc} 0 {backspace}"]
+      },
+      display: {
+        "{numbers}": "123",
+        "{ent}": "return",
+        "{escape}": "esc ⎋",
+        "{tab}": "tab ⇥",
+        "{backspace}": "⌫",
+        "{capslock}": "caps lock ⇪",
+        "{shift}": "⇧",
+        "{controlleft}": "ctrl ⌃",
+        "{controlright}": "ctrl ⌃",
+        "{altleft}": "alt ⌥",
+        "{altright}": "alt ⌥",
+        "{metaleft}": "cmd ⌘",
+        "{metaright}": "cmd ⌘",
+        "{abc}": "ABC"
+      }
+      
     });
   }
 
-  // Getter for easy access to form fields
-  get f() {
-    return this.signupForm.controls;
+  onChange = (input: string) => {
+    this.value = input;
+    console.log("Input changed", input);
+  };
+
+  onKeyPress = (button: string) => {
+    console.log("Button pressed", button);
+
+    /**
+     * If you want to handle the shift and caps lock buttons
+     */
+    if (button === "{shift}" || button === "{lock}") this.handleShift();
+  };
+
+  onInputChange = (event: any) => {
+    this.keyboard.setInput(event.target.value);
+  };
+
+  handleShift = () => {
+    let currentLayout = this.keyboard.options.layoutName;
+    let shiftToggle = currentLayout === "default" ? "shift" : "default";
+
+    this.keyboard.setOptions({
+      layoutName: shiftToggle
+    });
+  };
+
+  handleNumbers() {
+    let currentLayout = this.keyboard.options.layoutName;
+    let numbersToggle = currentLayout !== "numbers" ? "numbers" : "default";
+
+    this.keyboard.setOptions({
+      layoutName: numbersToggle
+    });
   }
 
-  // Method to handle form submission
-  onSubmit(): void {
-    if (this.signupForm.invalid) {
-      return;
-    }
 
-    const { username, email, password, confirmPassword } = this.signupForm.value;
-
-    if (password !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match!';
-      return;
-    }
-
-    this.authService.signup(username, password).subscribe(
-      (response) => {
-        // Handle successful signup (e.g., redirect to login or home)
-        console.log('Signup successful:', response);
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        // Handle error
-        this.errorMessage = error.error.message || 'Signup failed';
-      }
-    );
-  }
 }

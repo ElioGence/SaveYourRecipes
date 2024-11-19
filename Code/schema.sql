@@ -7,7 +7,7 @@ CREATE TABLE recipes (
     link TEXT
 );
 
-
+/*
 -- Create RecipeIngredients Table (Join Table)
 CREATE TABLE recipe_ingredients (
     recipe_id INT REFERENCES recipes(id) ON DELETE CASCADE,
@@ -15,7 +15,7 @@ CREATE TABLE recipe_ingredients (
     quantity VARCHAR(255),
     PRIMARY KEY (recipe_id, ingredient_id)
 );
-
+*/
 
 -- Create Users Table
 CREATE TABLE users (

@@ -1,52 +1,31 @@
-<!--
-<div class="signup-container">
-    <h2>Signup</h2>
-    
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="username">Username</label>
-        <input
-          id="username"
-          formControlName="username"
-          type="text"
-          [class.invalid]="f['username'].invalid && f['username'].touched"
-        />
-        <div *ngIf="f['username']?.invalid && f['username']?.touched" class="error">
-          Username is required and must be at least 3 characters long.
+<div class="row">
+  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="card auth">
+      <div class="card-body auth-card">
+        <div class="auth-avatar">
+          <img src="../../../assets/images/userIcon.png" alt="user" class="user-image">
         </div>
+        <form (submit)="signUp(userData)">
+            <div class="form-group">
+              <label for="name">Name : </label>
+              <input type="text" name="name" class="form-control" placeholder="Name" [(ngModel)]="userData.name">
+            </div>
+            <div class="form-group">
+              <label for="password">Password : </label>
+              <input type="password" name="password" class="form-control" placeholder="********" [(ngModel)]="userData.password">
+            </div>
+            <div class="form-group">
+              <label for="c_password">Confirm Password : </label>
+              <input type="password" name="c_password" class="form-control" placeholder="********" [(ngModel)]="userData.c_password">
+            </div>
+            <div class="text-center">
+              <input type="submit" class="btn btn-my" value="Sign Up">
+            </div>
+            <div class="text-center login">
+              Already have an account ? <a routerLink="/login">Login</a> here.
+            </div>
+        </form>
       </div>
-  
-      <div>
-        <label for="password">Password</label>
-        <input
-          id="password"
-          formControlName="password"
-          type="password"
-          [class.invalid]="f['password'].invalid && f['password'].touched"
-        />
-        <div *ngIf="f['password'].invalid && f['password'].touched" class="error">
-          Password is required and must be at least 6 characters long.
-        </div>
-      </div>
-  
-      <div>
-        <label for="confirmPassword">Confirm Password</label>
-        <input
-          id="confirmPassword"
-          formControlName="confirmPassword"
-          type="password"
-          [class.invalid]="f['confirmPassword'].invalid && f['confirmPassword'].touched"
-        />
-        <div *ngIf="f['confirmPassword'].invalid && f['confirmPassword'].touched" class="error">
-          Please confirm your password.
-        </div>
-      </div>
-  
-      <div *ngIf="errorMessage" class="error">
-        {{ errorMessage }}
-      </div>
-  
-      <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
-    </form>
+    </div>
+  </div>
 </div>
--->

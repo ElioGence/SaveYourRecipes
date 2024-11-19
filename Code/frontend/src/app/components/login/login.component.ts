@@ -1,31 +1,25 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../shared/services/auth.service';
+import { Component, OnInit } from "@angular/core";
+import { UserService } from "../../shared/services/user.service"; 
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule], // Import modules directly in the component
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
-export class LoginComponent {
-  username = '';
-  password = '';
 
-  constructor(private authService: AuthService) {}
+export class LoginComponent implements OnInit {
+  userData;
+  constructor(private user: UserService) {}
 
-  onLogin() {
-    this.authService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        console.log('Login successful:', response);
-        // Handle successful login (e.g., store token, navigate to another page)
-      },
-      error: (err) => {
-        console.error('Login failed:', err);
-        // Handle login error (e.g., display an error message)
-      },
-    });
+  ngOnInit() {
+    this.user.currentUserData.subscribe(userData => (this.userData = userData));
+  }
+
+  changeData(event : any) {
+    var msg = event.target.value;
+    this.user.changeData(msg);
+  }
+  login(data : any) {
+    this.user.changeData(data);
   }
 }

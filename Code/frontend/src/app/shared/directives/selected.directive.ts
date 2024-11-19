@@ -1,12 +1,10 @@
-// selected-pizza.directive.ts
-
 import { Directive, ElementRef, Input, Renderer2, HostBinding } from '@angular/core';
 
 @Directive({
-  selector: '[appSelectedPizza]'
+  selector: '[appSelectedRecipe]'
 })
 export class SelectedDirective {
-  @Input() set appSelectedPizza(value: boolean) {
+  @Input() set appSelectedRecipe(value: boolean) {
     this.isSelected = value;
   }
 

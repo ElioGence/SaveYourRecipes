@@ -1,19 +1,57 @@
 .main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .main img {
-    width: 100px;  /* Set the desired width */
-    height: auto;  /* Maintain aspect ratio */
-  }
-  
-  
-  .title h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #4b4b4b; /* Adjust color as needed */
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.main img {
+  width: 100px;  /* Set the desired width */
+  height: auto;  /* Maintain aspect ratio */
+}
+
+
+.title h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4b4b4b; /* Adjust color as needed */
+}
+
+p {
+  font-family: Lato;
+}
+
+.auth-options {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.auth-options h2 {
+  font-size: 24px;
+  color: #6a0dad;
+}
+
+.auth-options p {
+  font-size: 25px;
+  color: #000;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.auth-button {
+  background-color: #6a0dad;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 0 10px;
+  text-transform: uppercase;
+}
+
+.auth-button:hover {
+  background-color: #6a0dad;
+}

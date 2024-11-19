@@ -7,7 +7,6 @@ from routes.users_routes import users_routes
 from routes.ingredients_routes import ingredients_routes  
 from routes.recipe_ingredients_routes import recipe_ingredients_routes  
 from auth import auth_bp
-
 # Initialize the JWTManager instance
 jwt = JWTManager()
 
