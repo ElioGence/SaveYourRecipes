@@ -13,3 +13,8 @@
     box-sizing: border-box; 
 }
   
+.ingredients-textarea {
+  width: 100%;  /* Full width of the parent container */
+  height: 150px; /* Adjust height as needed */
+  resize: vertical; /* Optional: allows vertical resizing */
+}

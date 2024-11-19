@@ -9,7 +9,7 @@ import { BehaviorSubject,Observable } from 'rxjs';
 export class RecipesService {
 
     private recipes: Recipe[] = [
-        new Recipe("Gnocchi Chèvre-Epinard","Délicieux et végétarien, 50cl Crème + 1 chèvre","https://www.marmiton.org/recettes/recette_gnocchi-aux-epinards-et-chevre_222929.aspx")
+        new Recipe("Gnocchi Chèvre-Epinard","Délicieux plat végétarien, 50cl Crème + 1 chèvre","https://www.marmiton.org/recettes/recette_gnocchi-aux-epinards-et-chevre_222929.aspx")
     ];
 
     private recipesSubject: BehaviorSubject<Recipe[]> = new BehaviorSubject<Recipe[]>([]);

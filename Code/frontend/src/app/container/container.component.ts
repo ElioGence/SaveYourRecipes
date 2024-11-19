@@ -15,8 +15,9 @@ import { AppModule } from '../app.module';
  */
 export class ContainerComponent implements OnInit {
   recipes : Recipe[] = [];
-  selectedRecipe: Recipe = new Recipe ("","","");
+  selectedRecipe: Recipe = new Recipe ("Empty","","");
   addRecipeMode: boolean = false; // Nouvelle variable pour indiquer si le mode d'ajout de recette est activé
+  selectMode : boolean = false;
   newRecipe: Recipe = new Recipe ("","",""); // Nouvelle recette en cours d'ajout
 
   constructor(private recipesService: RecipesService) {}
@@ -33,6 +34,7 @@ export class ContainerComponent implements OnInit {
   onRecipeSelected(recipe: Recipe) {
     // Mettre à jour la recette sélectionnée via le service
     this.recipesService.setSelectedRecipe(recipe);
+    this.selectMode=true;
   }
 
   onAddRecipe() {

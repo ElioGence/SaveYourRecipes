@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, Input  } from '@angular/core';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Recipe } from '../shared/models/recipe';
 
@@ -17,7 +17,7 @@ export class RecipeDetailsComponent implements OnInit {
   constructor(private recipeService: RecipesService) {}
 
   ngOnInit() {
-    // Souscrire aux changements de la pizza sélectionnée
+    // Souscrire aux changements de la recette sélectionnée
     this.recipeService.getSelectedRecipe().subscribe((recipe: Recipe) => {
       this.recipe = recipe;
     });

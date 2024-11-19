@@ -4,7 +4,7 @@
         <app-recipe-list [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)" (addRecipe)="onAddRecipe()"></app-recipe-list>
     </div>
     <div class="recipe-details">
-        <app-recipe-details *ngIf="!addRecipeMode"></app-recipe-details>
+        <app-recipe-details *ngIf="!addRecipeMode && selectMode"></app-recipe-details>
     </div>
     <div class="recipe-create" *ngIf="addRecipeMode">
         <h2>Ajouter une recette</h2>

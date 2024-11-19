@@ -1,5 +1,5 @@
-<div class="recipes-details">
+<div class="recipes-details" >
     <h2>{{ recipe.name }}</h2>
-    <a [href]="recipe.link">Lien de la recette</a>
+    <a [href]="recipe.link" *ngIf="recipe.link !== ''">Lien de la recette</a>
     <p>{{ recipe.description }}</p>
 </div>

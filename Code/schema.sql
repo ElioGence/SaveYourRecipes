@@ -1,23 +1,17 @@
 -- Create Recipes Table
 CREATE TABLE recipes (
     id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     link TEXT
 );
 
--- Create Ingredients Table
-CREATE TABLE ingredients (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL
-);
-
-
 
 -- Create RecipeIngredients Table (Join Table)
 CREATE TABLE recipe_ingredients (
     recipe_id INT REFERENCES recipes(id) ON DELETE CASCADE,
-    ingredient_id VARCHAR(255) REFERENCES ingredients(id) ON DELETE CASCADE,
+    ingredient VARCHAR(255),
     quantity VARCHAR(255),
     PRIMARY KEY (recipe_id, ingredient_id)
 );
