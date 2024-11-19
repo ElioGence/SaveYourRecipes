@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
+
 export class SignupComponent {
   signupForm: FormGroup;
   errorMessage: string = '';
@@ -21,7 +22,6 @@ export class SignupComponent {
     // Initialize the signup form with validators
     this.signupForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
     });

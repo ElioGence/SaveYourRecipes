@@ -1,18 +1,18 @@
 import { Component, OnInit  } from '@angular/core';
-import { Recipe } from '../shared/models/recipe';
 import { RecipesService } from '../shared/services/recipes.service';
+import { Recipe } from '../shared/models/recipe';
 
 @Component({
-  selector: 'app-pizza-details',
-  templateUrl: './pizza-details.component.html',
-  styleUrls: ['./pizza-details.component.css']
+  selector: 'app-recipe-details',
+  templateUrl: './recipe-details.component.html',
+  styleUrls: ['./recipe-details.component.css']
 })
 
-export class RecipesDetailsComponent implements OnInit {
+export class RecipeDetailsComponent implements OnInit {
 
   //@Input() recipe : Recipe = new Recipe ("","","");
 
-  recipe: Recipe = new Recipe( );
+  recipe: Recipe = new Recipe("","","");
 
   constructor(private recipeService: RecipesService) {}
 

@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="recipe-list">
+        <h1>Liste des recettes</h1>
+        <app-recipe-list [recipes]="recipes" (recipeSelected)="onRecipeSelected($event)" (addRecipe)="onAddRecipe()"></app-recipe-list>
+    </div>
+    <div class="recipe-details">
+        <app-recipe-details *ngIf="!addRecipeMode"></app-recipe-details>
+    </div>
+    <div class="recipe-create" *ngIf="addRecipeMode">
+        <h2>Ajouter une recette</h2>
+        <form (submit)="onSubmit()">
+        <label for="recipeName">Nom:</label>
+        <input type="text" id="recipeName" [(ngModel)]="newRecipe.name" name="name" required>
+
+        <label for="recipeDesc">Description:</label>
+        <textarea id="recipeDesc" [(ngModel)]="newRecipe.description" name="desc" required></textarea>
+
+        <label for="recipeLink">Lien :</label>
+        <input type="text" id="recipeLink" [(ngModel)]="newRecipe.link" name="link" required>
+
+        <label for="recipeIngredients">Liste des ingrédients :</label>
+        <input type="text" id="recipeIngredients" name="ingredients" placeholder="Entrez les ingrédients séparés par une virgule" required>
+
+        <button type="submit">Ajouter</button>
+        <button type="reset" (click)="cancelCreation()">Annuler</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const input = document.getElementById('recipeIngredients');
+    input.addEventListener('focus', () => {
+        input.placeholder = "Ex : sucre, farine, œufs";
+    });
+    input.addEventListener('blur', () => {
+        input.placeholder = "Entrez les ingrédients séparés par une virgule";
+    });
+</script>

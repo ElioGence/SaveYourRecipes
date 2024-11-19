@@ -1,0 +1,15 @@
+
+.recipe-details {
+    width: 50%; 
+    float: right; 
+    padding: 20px; 
+    box-sizing: border-box; 
+  }
+
+.recipe-list {
+    width: 50%; 
+    float: left; 
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+  
