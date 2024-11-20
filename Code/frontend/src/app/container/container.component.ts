@@ -1,58 +1,80 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Recipe } from '../shared/models/recipe';
 import { RecipesService } from '../shared/services/recipes.service';
-import { AppModule } from '../app.module';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-container',
   templateUrl: './container.component.html',
-  styleUrls: ['./container.component.css'],
-  providers: [RecipesService]
+  styleUrls: ['./container.component.css']
 })
+export class ContainerComponent implements OnInit, OnDestroy {
+  recipes: Recipe[] = [];
+  selectedRecipe: Recipe = new Recipe('', '', '');
+  addRecipeMode: boolean = false;
+  selectMode: boolean = false;
+  newRecipe: Recipe = new Recipe('', '', '');
+  private recipeSubscription: Subscription | null = null;
+  user_id: string | null = null;
 
-/**
- * NE PREND PAS EN COMPTE LES INGREDIENTS POUR LE MOMENT
- */
-export class ContainerComponent implements OnInit {
-  recipes : Recipe[] = [];
-  selectedRecipe: Recipe = new Recipe ("Empty","","");
-  addRecipeMode: boolean = false; // Nouvelle variable pour indiquer si le mode d'ajout de recette est activé
-  selectMode : boolean = false;
-  newRecipe: Recipe = new Recipe ("","",""); // Nouvelle recette en cours d'ajout
-
-  constructor(private recipesService: RecipesService) {}
+  constructor(private recipesService: RecipesService, private router: Router) {}
 
   ngOnInit() {
-    this.recipes = this.recipesService.getRecipes();
+    // Retrieve user ID from localStorage
+    this.user_id = localStorage.getItem('user_id');
+    if (this.user_id===null) {
+      // If user_id is not found, redirect to login page
+      this.router.navigate(['/login']);
+      return;
+    }
 
-    // Souscrire aux changements de la recette sélectionnée
-    this.recipesService.getSelectedRecipe().subscribe((recipe: Recipe) => {
-      this.selectedRecipe = recipe;
+    // Fetch recipes from the API using the user_id
+    this.recipesService.getRecipes(this.user_id).subscribe((recipes: Recipe[]) => {
+      this.recipes = recipes;
+    });
+
+    // Subscribe to selected recipe changes
+    this.recipeSubscription = this.recipesService.getSelectedRecipe().subscribe((recipe: Recipe | null) => {
+      if (recipe) {
+        this.selectedRecipe = recipe;
+        this.selectMode = true;
+      }
     });
   }
 
   onRecipeSelected(recipe: Recipe) {
-    // Mettre à jour la recette sélectionnée via le service
+    // Update selected recipe via service
     this.recipesService.setSelectedRecipe(recipe);
-    this.selectMode=true;
+    this.selectMode = true;
   }
 
   onAddRecipe() {
-    // Activer le mode d'ajout de recette
+    // Activate add recipe mode
     this.addRecipeMode = true;
-    // Réinitialiser la nouvelle recette
-    this.newRecipe = { name: '', description: '', link: '' };
-   }
+    // Reset new recipe form
+    this.newRecipe = new Recipe('', '', '');
+  }
 
   onSubmit() {
-    // Ajouter la nouvelle recette à la liste 
-    this.recipes.push(this.newRecipe);
-    // Réinitialiser le mode d'ajout de recette
-    this.addRecipeMode = false;
+    // Add the new recipe to the 
+    if (this.user_id!=null) {
+      this.recipesService.addRecipe(this.newRecipe, this.user_id).subscribe((recipe: Recipe) => {
+        this.recipes.push(recipe); // Add to local list after successful API response
+        this.addRecipeMode = false; // Exit add mode
+      });
+    }
   }
 
   cancelCreation() {
-    // Réinitialiser le mode d'ajout de recette à false
+    // Deactivate add recipe mode without saving
     this.addRecipeMode = false;
+  }
+
+  ngOnDestroy() {
+    // Clean up subscriptions
+    if (this.recipeSubscription) {
+      this.recipeSubscription.unsubscribe();
+    }
   }
 }

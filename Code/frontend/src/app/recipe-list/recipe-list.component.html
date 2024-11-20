@@ -1,5 +1,5 @@
 <div *ngFor="let recipe of recipes; let i = index" (click)="onRecipeClick(recipe)" [ngClass]="{'selected': isSelected(recipe)}">
-    <a href="container#" class="recipe-list">
+    <a href="recipes#" class="recipe-list">
       <h1>{{ recipe.name }}</h1>
     </a>
 </div>

@@ -1,3 +1,10 @@
+-- Create Users Table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
 -- Create Recipes Table
 CREATE TABLE recipes (
     id SERIAL PRIMARY KEY,
@@ -17,11 +24,5 @@ CREATE TABLE recipe_ingredients (
 );
 */
 
--- Create Users Table
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-);
 
 

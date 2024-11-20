@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
-import { SignUpComponent } from './components/signup/signup.component';  
+import { SignupComponent } from './components/signup/signup.component';  
 import { AuthService } from './shared/services/auth.service';
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { LoginComponent } from './components/login/login.component';
@@ -16,11 +16,12 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeDetailsComponent } from './recipes-details/recipe-details.component';
 import { SelectedDirective } from './shared/directives/selected.directive';
 import { UserService } from './shared/services/user.service';
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent,
+    SignupComponent,
     HeaderComponent,
     ContainerComponent,
     RecipeListComponent,
@@ -32,7 +33,8 @@ import { UserService } from './shared/services/user.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
   providers: [UserService]

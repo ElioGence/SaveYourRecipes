@@ -1,16 +1,13 @@
-from app import create_app 
-from dotenv import load_dotenv
-import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from app.config import Config
 
-# Load environment variables from the .env file
-load_dotenv()
+app = Flask(__name__)
+app.config.from_object(Config)  # Load configurations from Config class
 
-# Get Flask environment from .env or default to 'development'
-flask_env = os.getenv("FLASK_ENV", "development")
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
-# Create the app instance using the environment setting
-app = create_app(flask_env)
-
-if __name__ == "__main__":
-    # Run the Flask app
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -17,9 +17,15 @@ export class RecipeDetailsComponent implements OnInit {
   constructor(private recipeService: RecipesService) {}
 
   ngOnInit() {
-    // Souscrire aux changements de la recette sélectionnée
-    this.recipeService.getSelectedRecipe().subscribe((recipe: Recipe) => {
-      this.recipe = recipe;
+    // Subscribe to changes in the selected recipe
+    this.recipeService.getSelectedRecipe().subscribe((recipe: Recipe | null) => {
+      if (recipe) {
+        // Handle the case when recipe is not null
+        this.recipe = recipe;
+      } else {
+        // Handle the case when recipe is null
+        this.recipe = new Recipe('', '', '');  // or any default handling
+      }
     });
   }
   
