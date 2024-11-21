@@ -5,3 +5,5 @@
 </div>
 
 <button (click)="onAddRecipeClick()">Ajouter une recette</button>
+<button (click)="onDeleteRecipeClick()" [disabled]="!selectedRecipe?.id">Supprimer une recette</button>
+<button (click)="onModifyRecipeClick()" [disabled]="!selectedRecipe?.id">Modifier une recette</button>

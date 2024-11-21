@@ -16,18 +16,24 @@ export class AppComponent {
   constructor(private router: Router, private recipesService: RecipesService) {}
 
   resetApp(): void {
-    // Remove user_id from localStorage
     localStorage.removeItem('user_id');
 
-    // Reset recipes array
     this.recipes = [];
 
-    // Optionally, you can reset the selected recipe in the service
-    this.recipesService.setSelectedRecipe(new Recipe("","",""));
+    this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""));
 
-    // Navigate to the login or home page if needed
     this.router.navigate(['/login']);
 
-    this.recipesService.setSelectedRecipe(new Recipe("","",""))
+    this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""))
+  }
+
+  resetAppSignUp(): void {
+    localStorage.removeItem('user_id');
+
+    this.recipes = [];
+
+    this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""));
+
+    this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""))
   }
 }

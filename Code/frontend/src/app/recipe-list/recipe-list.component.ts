@@ -13,8 +13,10 @@ export class RecipeListComponent {
   @Input() recipes: Recipe[] = [];
   @Output() recipeSelected: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   @Output() addRecipe: EventEmitter<void> = new EventEmitter<void>(); 
+  @Output() deleteRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+  @Output() modifyRecipe: EventEmitter<Recipe> = new EventEmitter<Recipe>();
   
-  selectedRecipe: Recipe = new Recipe("","","");
+  selectedRecipe: Recipe = new Recipe(0,0,"","","");
 
   constructor(private recipesService: RecipesService) { }
 
@@ -24,10 +26,19 @@ export class RecipeListComponent {
   }
 
   isSelected(recipe: Recipe) {
-    return this.selectedRecipe && this.selectedRecipe.name === recipe.name;
+    return this.selectedRecipe && this.selectedRecipe.id === recipe.id;
   }
 
   onAddRecipeClick() {
     this.addRecipe.emit();
   }
+
+  onDeleteRecipeClick() {
+    this.deleteRecipe.emit(this.selectedRecipe);
+  }
+  
+  onModifyRecipeClick() {
+    this.modifyRecipe.emit(this.selectedRecipe);
+  }
+  
 }
