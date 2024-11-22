@@ -15,8 +15,14 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, { username, password });
   }
 
-  signUp(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/signup`, { username, password });
+  signUp(username: string, password: string, c_password:string): Observable<any> {
+    if (password==c_password)
+      return this.http.post(`${this.apiUrl}/signup`, { username, password });
+    else
+      return new Observable(observer => {
+        observer.error({ message: 'Passwords do not match!' });
+        observer.complete();
+      });
   }
 
   

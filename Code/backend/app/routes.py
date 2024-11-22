@@ -20,7 +20,8 @@ def signup():
     new_user = User(username=data['username'], password=data['password'])
     db.session.add(new_user)
     db.session.commit()
-    return jsonify({"message": "User created successfully"}), 201
+
+    return jsonify({"message": "Signup successful", "user_id": new_user.id}), 201
 
 @main_bp.route('/login', methods=['POST'])
 @cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])  
