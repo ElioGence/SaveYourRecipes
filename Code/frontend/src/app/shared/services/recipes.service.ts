@@ -23,11 +23,19 @@ export class RecipesService {
     return this.http.post<Recipe>(`${this.apiUrl}/recipes`, { ...newRecipe, user_id });
   }
 
+  deleteRecipe(recipeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/recipes/${recipeId}`);
+  }
+  
+  modifyRecipe(recipeId: number, updatedRecipe: Recipe): Observable<Recipe> {
+    return this.http.put<Recipe>(`${this.apiUrl}/recipes/${recipeId}`, updatedRecipe);
+  }
+
   getSelectedRecipe(): Observable<Recipe | null> {
     return this.selectedRecipe.asObservable();
   }
 
   setSelectedRecipe(recipe: Recipe): void {
-    this.selectedRecipe.next(recipe); // Update the selected recipe
+    this.selectedRecipe.next(recipe); 
   }
 }

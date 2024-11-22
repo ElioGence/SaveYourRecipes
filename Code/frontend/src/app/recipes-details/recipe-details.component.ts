@@ -12,7 +12,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   //@Input() recipe : Recipe = new Recipe ("","","");
 
-  recipe: Recipe = new Recipe("","","");
+  recipe: Recipe = new Recipe(0,0,"","","");
 
   constructor(private recipeService: RecipesService) {}
 
@@ -24,7 +24,7 @@ export class RecipeDetailsComponent implements OnInit {
         this.recipe = recipe;
       } else {
         // Handle the case when recipe is null
-        this.recipe = new Recipe('', '', '');  // or any default handling
+        this.recipe = new Recipe(0,0,'', '', '');  // or any default handling
       }
     });
   }

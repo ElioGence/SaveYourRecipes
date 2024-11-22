@@ -14,9 +14,10 @@ export class SignupComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   signUp(userData: any) {
-    this.authService.signUp(userData.username, userData.password).subscribe(response => {
+    this.authService.signUp(userData.username, userData.password, userData.c_password).subscribe(response => {
+      console.log(response)
       if (response.message === "Signup successful") {
-        // Redirect to login page after successful signup
+        localStorage.setItem('user_id', response.user_id.toString());
         this.router.navigate(['/recipes']);
       }
     }, error => {

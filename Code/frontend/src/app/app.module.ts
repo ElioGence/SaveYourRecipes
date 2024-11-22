@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routes';
 import { SignupComponent } from './components/signup/signup.component';  
 import { AuthService } from './shared/services/auth.service';
-import { RecipesComponent } from './components/recipes/recipes.component';
 import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';

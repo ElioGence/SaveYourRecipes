@@ -4,13 +4,6 @@ from flask_cors import cross_origin
 
 main_bp = Blueprint('main', __name__)
 
-@main_bp.after_request
-def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', 'http://localhost:4200')
-    response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    return response
-
 @main_bp.route('/signup', methods=['POST', 'OPTIONS'])
 @cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])  
 def signup():
@@ -27,7 +20,8 @@ def signup():
     new_user = User(username=data['username'], password=data['password'])
     db.session.add(new_user)
     db.session.commit()
-    return jsonify({"message": "User created successfully"}), 201
+
+    return jsonify({"message": "Signup successful", "user_id": new_user.id}), 201
 
 @main_bp.route('/login', methods=['POST'])
 @cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])  
@@ -64,5 +58,44 @@ def add_recipe():
     db.session.add(new_recipe)
     db.session.commit()
     return jsonify(new_recipe.to_dict()), 201
+
+@main_bp.route('/recipes/<int:recipe_id>', methods=['DELETE'])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    if not recipe:
+        return jsonify({"error": "Recipe not found"}), 404
+    
+    try:
+        db.session.delete(recipe)
+        db.session.commit()
+        return '', 204
+    except Exception as e:
+        db.session.rollback()  
+        return jsonify({"error": str(e)}), 500
+
+@main_bp.route('/recipes/<int:recipe_id>', methods=['PUT'])
+@cross_origin(origin='localhost', headers=['Content-Type', 'Authorization'])
+def modify_recipe(recipe_id):
+    recipe = Recipe.query.get(recipe_id)
+    
+    if not recipe:
+        return jsonify({"error": "Recipe not found"}), 404
+    
+    data = request.json
+    
+    if 'name' in data:
+        recipe.name = data['name']
+    if 'description' in data:
+        recipe.description = data['description']
+    if 'link' in data:
+        recipe.link = data['link']
+    
+    try:
+        db.session.commit()
+        return jsonify(recipe.to_dict()), 200  
+    except Exception as e:
+        db.session.rollback()  
+        return jsonify({"error": str(e)}), 500
 
 

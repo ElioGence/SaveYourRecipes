@@ -11,10 +11,11 @@ import { Router } from '@angular/router';
 })
 export class ContainerComponent implements OnInit, OnDestroy {
   recipes: Recipe[] = [];
-  selectedRecipe: Recipe = new Recipe('', '', '');
+  selectedRecipe: Recipe = new Recipe(0,0,'', '', '');
   addRecipeMode: boolean = false;
+  modifyRecipeMode: boolean = false;
   selectMode: boolean = false;
-  newRecipe: Recipe = new Recipe('', '', '');
+  newRecipe: Recipe = new Recipe(0,0,'', '', '');
   private recipeSubscription: Subscription | null = null;
   user_id: string | null = null;
 
@@ -50,29 +51,57 @@ export class ContainerComponent implements OnInit, OnDestroy {
   }
 
   onAddRecipe() {
-    // Activate add recipe mode
     this.addRecipeMode = true;
-    // Reset new recipe form
-    this.newRecipe = new Recipe('', '', '');
+    this.modifyRecipeMode = false;
+    this.newRecipe = new Recipe(0,0,'', '', '');
   }
 
-  onSubmit() {
-    // Add the new recipe to the 
-    if (this.user_id!=null) {
-      this.recipesService.addRecipe(this.newRecipe, this.user_id).subscribe((recipe: Recipe) => {
-        this.recipes.push(recipe); // Add to local list after successful API response
-        this.addRecipeMode = false; // Exit add mode
+  onDeleteRecipe() {
+    this.modifyRecipeMode = false;
+    this.addRecipeMode = false;
+    if (this.selectedRecipe.id !== 0 && this.user_id) {
+      this.recipesService.deleteRecipe(this.selectedRecipe.id).subscribe(() => {
+        this.recipes = this.recipes.filter(recipe => recipe.id !== this.selectedRecipe.id);
+        this.selectedRecipe = new Recipe(0, 0, '', '', ''); 
+        this.selectMode = false; 
       });
     }
   }
+  
 
-  cancelCreation() {
-    // Deactivate add recipe mode without saving
+  onModifyRecipe() {
+    this.modifyRecipeMode = true;
+    this.addRecipeMode=false;
+  }
+
+  onSubmit() {
+    if (this.addRecipeMode){
+      if (this.user_id!=null) {
+        this.recipesService.addRecipe(this.newRecipe, this.user_id).subscribe((recipe: Recipe) => {
+          this.recipes.push(recipe); 
+          this.addRecipeMode = false; 
+        });
+      }
+    } else if (this.modifyRecipeMode) {
+      if (this.user_id) {
+        this.recipesService.modifyRecipe(this.selectedRecipe.id, this.newRecipe).subscribe((updatedRecipe: Recipe) => {
+          const index = this.recipes.findIndex(recipe => recipe.id === this.selectedRecipe.id);
+          if (index !== -1) {
+            this.recipes[index] = updatedRecipe; 
+          }
+          this.modifyRecipeMode = false;
+        });
+      }
+    }
+    
+  }
+
+  cancel() {
+    this.modifyRecipeMode = false; 
     this.addRecipeMode = false;
   }
 
   ngOnDestroy() {
-    // Clean up subscriptions
     if (this.recipeSubscription) {
       this.recipeSubscription.unsubscribe();
     }
