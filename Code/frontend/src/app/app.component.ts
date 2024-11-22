@@ -10,10 +10,15 @@ import { RecipesService } from './shared/services/recipes.service';
 })
 export class AppComponent {
   recipes: Recipe[] = [];
+  isUserLoggedIn : Boolean = false;
 
   title = 'SaveYourRecipes';
 
   constructor(private router: Router, private recipesService: RecipesService) {}
+
+  ngOnInit() {
+    this.isUserLoggedIn = !!localStorage.getItem('user_id');
+  }
 
   resetApp(): void {
     localStorage.removeItem('user_id');
@@ -25,6 +30,8 @@ export class AppComponent {
     this.router.navigate(['/login']);
 
     this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""))
+
+    this.isUserLoggedIn = false;
   }
 
   resetAppSignUp(): void {
@@ -34,6 +41,8 @@ export class AppComponent {
 
     this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""));
 
-    this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""))
+    this.recipesService.setSelectedRecipe(new Recipe(0,0,"","",""));
+
+    this.isUserLoggedIn = false;
   }
 }

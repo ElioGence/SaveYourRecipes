@@ -7,7 +7,7 @@ import { Recipe } from '../models/recipe';
   providedIn: 'root',
 })
 export class RecipesService {
-  private apiUrl = 'http://localhost:5000'; // Replace with your API URL
+  private apiUrl = 'http://localhost:5000'; 
   private selectedRecipe = new BehaviorSubject<Recipe | null>(null);
 
   constructor(private http: HttpClient) {}
@@ -15,7 +15,7 @@ export class RecipesService {
   getRecipes(user_id: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.apiUrl}/recipes`, {
       headers: { 'Content-Type': 'application/json' },
-      params: { user_id }  // Send user_id as a query parameter
+      params: { user_id }  
     });
   }
 

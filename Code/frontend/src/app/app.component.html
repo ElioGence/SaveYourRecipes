@@ -9,7 +9,7 @@
     <img [src]="'../assets/images/logoPurple.png'">
   </div>
 </div>
-<div class="auth-options" >
+<div class="auth-options" *ngIf="!isUserLoggedIn">
   <p>Please choose an option to continue:</p>
 
   <div class="button-container">

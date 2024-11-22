@@ -90,10 +90,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
             this.recipes[index] = updatedRecipe; 
           }
           this.modifyRecipeMode = false;
+          this.recipesService.setSelectedRecipe(this.newRecipe);
         });
       }
     }
-    
   }
 
   cancel() {
