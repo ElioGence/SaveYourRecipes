@@ -1,1 +1,25 @@
 <!-- Select bar -->
+<html>
+    <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" 
+    [ngStyle]="{ display: isSidebarOpen ? 'block' : 'none', width: isSidebarOpen ? '25%' : '0' }" id="mySidebar">
+        <button class="w3-bar-item w3-button w3-large" (click)="closeSideBar()">Close &times;</button>
+        <a href="#" class="w3-bar-item w3-button">Link 1</a>
+        <a href="#" class="w3-bar-item w3-button">Link 2</a>
+        <a href="#" class="w3-bar-item w3-button">Link 3</a>
+        </div>
+
+        <div id="main" [ngStyle]="{ marginLeft: isSidebarOpen ? '25%' : '0' }">
+            <div class="w3-teal">
+                <button 
+                id="openNav" 
+                class="w3-button w3-teal w3-xlarge" 
+                (click)="openSideBar()"
+                *ngIf="!isSidebarOpen">
+                &#9776;
+                </button>
+                <div class="w3-container">
+                <h1>My Page</h1>
+                </div>
+            </div>
+        </div>
+</html>

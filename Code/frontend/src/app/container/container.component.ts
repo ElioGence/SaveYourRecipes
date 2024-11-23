@@ -25,12 +25,10 @@ export class ContainerComponent implements OnInit, OnDestroy {
     // Retrieve user ID from localStorage
     this.user_id = localStorage.getItem('user_id');
     if (this.user_id===null) {
-      // If user_id is not found, redirect to login page
       this.router.navigate(['/login']);
       return;
     }
-
-    // Fetch recipes from the API using the user_id
+    
     this.recipesService.getRecipes(this.user_id).subscribe((recipes: Recipe[]) => {
       this.recipes = recipes;
     });
